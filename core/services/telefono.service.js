@@ -8,7 +8,7 @@ class TelefonoService extends Service {
 
     /**
      * @param {Number} id
-     * @returns {TelefonoEntity}
+     * @returns {Object}
      */
     async getById(id) {
         const telefono = await this._repository.getById(id);
@@ -16,7 +16,8 @@ class TelefonoService extends Service {
     }
 
     /**
-     * @returns {Array}
+     * @param {Object} filters
+     * @returns {Object}
      */
     async getAll(filters) {
         const telefonos = await this._repository.getAll(filters);
@@ -24,8 +25,8 @@ class TelefonoService extends Service {
     }
 
     /**
-     * @param {TelefonoEntity} telefono
-     * @returns {TelefonoEntity}
+     * @param {Object} params
+     * @returns {Object}
      */
     async create(params) {
         const telefono = await this._repository.create(params);
@@ -34,15 +35,16 @@ class TelefonoService extends Service {
 
     /**
      * @param {Number} id
-     * @returns {Boolean}
+     * @returns {Object}
      */
     async delete(id) {
-        return id;// await this._repository.delete(telefono);
+        const telefono = await this._repository.delete(id);
+        return telefono;
     }
 
     /**
-     * @param {TelefonoEntity} telefono
-     * @returns {TelefonoEntity}
+     * @param {Object} params
+     * @returns {Object}
      */
     async modify(params) {
         const telefono = await this._repository.modify(params);

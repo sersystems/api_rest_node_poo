@@ -2,50 +2,52 @@ const Service = require('./service');
 
 class UsuarioService extends Service {
 
-    constructor(UsuarioRepository) {
+    constructor({ UsuarioRepository }) {
         super(UsuarioRepository);
     }
 
     /**
      * @param {Number} id
-     * @returns {UsuarioEntity}
+     * @returns {Object}
      */
     async getById(id) {
-        const usuario = await this.repository.getById(id);
+        const usuario = await this._repository.getById(id);
         return usuario;
     }
 
     /**
-     * @returns {Array}
+     * @param {Object} filters
+     * @returns {Object}
      */
     async getAll(filters) {
-        const usuarios = await this.repository.getAll();
-        return usuarios + filters;
+        const usuarios = await this._repository.getAll(filters);
+        return usuarios;
     }
 
     /**
-     * @param {UsuarioEntity} usuario
-     * @returns {UsuarioEntity}
+     * @param {Object} params
+     * @returns {Object}
      */
     async create(params) {
-        const usuario = await this.repository.create(params);
+        const usuario = await this._repository.create(params);
         return usuario;
     }
 
     /**
      * @param {Number} id
-     * @returns {Boolean}
+     * @returns {Object}
      */
     async delete(id) {
-        return id;// await this._repository.delete(usuario);
+        const usuario = await this._repository.delete(id);
+        return usuario;
     }
 
     /**
-     * @param {UsuarioEntity} usuario
-     * @returns {UsuarioEntity}
+     * @param {Object} params
+     * @returns {Object}
      */
     async modify(params) {
-        const usuario = await this.repository.modify(params);
+        const usuario = await this._repository.modify(params);
         return usuario;
     }
 }

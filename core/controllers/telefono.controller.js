@@ -1,14 +1,18 @@
 const Controller = require('./controller');
 
-class TelefonoEndpoint extends Controller {
+class TelefonoController extends Controller {
 
     constructor({ TelefonoService }) {
         super(TelefonoService);
     }
 
+    /**
+     * @param {Object} router
+     * @returns {Object}
+     */
     getRoutes(router) {
-        router.get('/telefono/show/:id', (req, res) => {
-            this.service
+        router.get('/show/:id', (req, res) => {
+            this._service
                 .getById(req.params.id)
                 .then((result) => {
                     res.status((result.status) ? 200 : 204).json({
@@ -23,8 +27,8 @@ class TelefonoEndpoint extends Controller {
                 });
         });
 
-        router.get('/telefono/list', (req, res) => {
-            this.service
+        router.get('/list', (req, res) => {
+            this._service
                 .getAll(req.params)
                 .then((result) => {
                     res.status((result.status) ? 200 : 204).json({
@@ -39,8 +43,8 @@ class TelefonoEndpoint extends Controller {
                 });
         });
 
-        router.post('/telefono/create', (req, res) => {
-            this.service
+        router.post('/create', (req, res) => {
+            this._service
                 .create(req.body)
                 .then((result) => {
                     res.status((result.status) ? 201 : 204).json({
@@ -55,11 +59,12 @@ class TelefonoEndpoint extends Controller {
                 });
         });
 
-        router.delete('/telefono/delete/:id', (req, res) => {
-            this.service
+        router.delete('/delete/:id', (req, res) => {
+            this._service
                 .delete(req.params.id)
                 .then((result) => {
                     res.status((result.status) ? 200 : 204).json({
+                        data: result.data,
                         status: result.status,
                         mesaage: (result.status) ? 'Teléfono eliminado satisfactoriamente.' : 'No se logró eliminar el teléfono.',
                     });
@@ -70,8 +75,8 @@ class TelefonoEndpoint extends Controller {
                 });
         });
 
-        router.put('/telefono/modify/:id', (req, res) => {
-            this.service
+        router.put('/modify/:id', (req, res) => {
+            this._service
             .modify(req.body)
                 .then((result) => {
                     res.status((result.status) ? 201 : 204).json({
@@ -90,4 +95,4 @@ class TelefonoEndpoint extends Controller {
     }
 }
 
-module.exports = TelefonoEndpoint;
+module.exports = TelefonoController;

@@ -8,50 +8,71 @@ class TelefonoRepository extends Repository {
 
     /**
      * @param {Number} id
-     * @returns {TelefonoEntity}
+     * @returns {Object}
      */
     async getById(id) {
-        const telefono = this._entity;
-        telefono.id = id;
-        return telefono;
+        const telefono = await this._db[this._entity].findOne({
+            where: {
+                id,
+            },
+        });
+
+        return {
+            data: telefono,
+            status: telefono !== null,
+        };
     }
 
     /**
-     * @returns {Array}
+     * @param {Object} filters
+     * @returns {Object}
      */
     async getAll(filters) {
-        const telefonos = [this._entity, this._entity, this._entity];
-        return telefonos + filters;
+        const telefonos = [{ id: 1, nombre: `sergio1a ${filters}` }, { id: 2, nombre: 'sergio2' }, { id: 3, nombre: 'sergio3' }];
+        return {
+            data: telefonos,
+            //status: (telefonos && telefonos.length > 0) ? true : false,
+        };
     }
 
     /**
-     * @param {TelefonoEntity} telefono
-     * @returns {TelefonoEntity}
+     * @param {Object} params
+     * @returns {Object}
      */
     async create(params) {
-        const telefono = this._entity;
-        telefono.id = params.id || 1;
-        telefono.usuario_id = 1;
-        telefono.numero = 1;
-        return telefono;
+        const telefono = { id: 4, nombre: `sergio1a ${params}` };
+        return {
+            data: telefono,
+            status: telefono !== null,
+        };
     }
 
     /**
      * @param {Number} id
-     * @returns {Boolean}
+     * @returns {Object}
      */
     async delete(id) {
-        return id;
-       // return await this._repository.delete(id);
+        const done = await this._db[this._entity].destroy({
+            where: {
+                id,
+            },
+        });
+
+        return {
+            status: done,
+        };
     }
 
     /**
-     * @param {TelefonoEntity} telefono
-     * @returns {TelefonoEntity}
+     * @param {Object} params
+     * @returns {Object}
      */
     async modify(params) {
-        //const telefono = await this._repository.modify(pTelefono);
-        return params;
+        const telefono = { id: 4, nombre: `sergio1a ${params}` };
+        return {
+            data: telefono,
+            status: telefono !== null,
+        };
     }
 }
 

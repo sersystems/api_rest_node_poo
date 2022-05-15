@@ -10,7 +10,7 @@ class Controller {
     }
 
     // Método abstracto
-    async getEndpoints(router) { throw new Error('Tienes que implementar el método getEndpoints.'); }
+    async getRoutes(router) { throw new Error('Tienes que implementar el método getRoutes.'); }
 }
 
 module.exports = Controller;

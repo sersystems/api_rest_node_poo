@@ -1,14 +1,18 @@
 const Controller = require('./controller');
 
-class UsuarioEndpoint extends Controller {
+class UsuarioController extends Controller {
 
     constructor({ UsuarioService }) {
         super(UsuarioService);
     }
 
+    /**
+     * @param {Object} router
+     * @returns {Object}
+     */
     getRoutes(router) {
-        router.get('/usuario/show/:id', (req, res) => {
-            this.service
+        router.get('/show/:id', (req, res) => {
+            this._service
                 .getById(req.params.id)
                 .then((result) => {
                     res.status((result.status) ? 200 : 204).json({
@@ -23,8 +27,8 @@ class UsuarioEndpoint extends Controller {
                 });
         });
 
-        router.get('/usuario/list', (req, res) => {
-            this.service
+        router.get('/list', (req, res) => {
+            this._service
                 .getAll(req.params)
                 .then((result) => {
                     res.status((result.status) ? 200 : 204).json({
@@ -39,8 +43,8 @@ class UsuarioEndpoint extends Controller {
                 });
         });
 
-        router.post('/usuario/create', (req, res) => {
-            this.service
+        router.post('/create', (req, res) => {
+            this._service
                 .create(req.body)
                 .then((result) => {
                     res.status((result.status) ? 201 : 204).json({
@@ -55,11 +59,12 @@ class UsuarioEndpoint extends Controller {
                 });
         });
 
-        router.delete('/usuario/delete/:id', (req, res) => {
-            this.service
+        router.delete('/delete/:id', (req, res) => {
+            this._service
                 .delete(req.params.id)
                 .then((result) => {
                     res.status((result.status) ? 200 : 204).json({
+                        data: result.data,
                         status: result.status,
                         mesaage: (result.status) ? 'Usuario eliminado satisfactoriamente.' : 'No se logró eliminar el usuario.',
                     });
@@ -70,8 +75,8 @@ class UsuarioEndpoint extends Controller {
                 });
         });
 
-        router.put('/usuario/modify/:id', (req, res) => {
-            this.service
+        router.put('/modify/:id', (req, res) => {
+            this._service
             .modify(req.body)
                 .then((result) => {
                     res.status((result.status) ? 201 : 204).json({
@@ -90,4 +95,4 @@ class UsuarioEndpoint extends Controller {
     }
 }
 
-module.exports = UsuarioEndpoint;
+module.exports = UsuarioController;

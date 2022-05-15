@@ -8,50 +8,71 @@ class UsuarioRepository extends Repository {
 
     /**
      * @param {Number} id
-     * @returns {UsuarioEntity}
+     * @returns {Object}
      */
     async getById(id) {
-        const usuario = this._entity;
-        usuario.id = id;
-        return usuario;
+        const usuario = await this._db[this._entity].findOne({
+            where: {
+                id,
+            },
+        });
+
+        return {
+            data: usuario,
+            status: usuario !== null,
+        };
     }
 
     /**
-     * @returns {Array}
+     * @param {Object} filters
+     * @returns {Object}
      */
     async getAll(filters) {
-        const usuarios = [this._entity, this._entity, this._entity];
-        return usuarios + filters;
+        const usuarios = [{ id: 1, nombre: `sergio1a ${filters}` }, { id: 2, nombre: 'sergio2' }, { id: 3, nombre: 'sergio3' }];
+        return {
+            data: usuarios,
+            //status: (usuarios.length > 0) ? true : false,
+        };
     }
 
     /**
-     * @param {UsuarioEntity} usuario
-     * @returns {UsuarioEntity}
+     * @param {Object} params
+     * @returns {Object}
      */
     async create(params) {
-        const usuario = this._entity;
-        usuario.id = params.id || 1;
-        usuario.usuario_id = 1;
-        usuario.numero = 1;
-        return usuario;
+        const usuario = { id: 4, nombre: `sergio1a ${params}` };
+        return {
+            data: usuario,
+            status: usuario !== null,
+        };
     }
 
     /**
      * @param {Number} id
-     * @returns {Boolean}
+     * @returns {Object}
      */
     async delete(id) {
-        return id;
-       // return await this._repository.delete(id);
+        const done = await this._db[this._entity].destroy({
+            where: {
+                id,
+            },
+        });
+
+        return {
+            status: done,
+        };
     }
 
     /**
-     * @param {UsuarioEntity} usuario
-     * @returns {UsuarioEntity}
+     * @param {Object} params
+     * @returns {Object}
      */
     async modify(params) {
-        //const usuario = await this._repository.modify(pUsuario);
-        return params;
+        const usuario = { id: 4, nombre: `sergio1a ${params}` };
+        return {
+            data: usuario,
+            status: usuario !== null,
+        };
     }
 }
 

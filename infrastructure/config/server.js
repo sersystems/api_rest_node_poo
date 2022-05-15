@@ -3,10 +3,10 @@ class Server {
     constructor() {
         this.express     = require('express');
         this.api         = this.express();
+        this.container   = require('./container').getContainer();
         this.cors        = require('cors');
         this.bodyParser  = require('body-parser');
         this.compression = require('compression');
-        this.router      = require('./router').getRouter(this.express.Router());
         require('dotenv').config();
     }
 
@@ -22,7 +22,8 @@ class Server {
     }
 
     setRoutes() {
-        this.api.use('/api', this.router);
+        this.api.use('/api/telefono', this.container.resolve('TelefonoController').getRoutes(this.express.Router()));
+        this.api.use('/api/usuario', this.container.resolve('UsuarioController').getRoutes(this.express.Router()));
     }
 
     initServer() {

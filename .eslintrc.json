@@ -10,7 +10,7 @@
     "parserOptions": {
         "ecmaVersion": "latest"
     },
-    "ignorePatterns": ["node_modules/*.js", "tests/*.js"],
+    "ignorePatterns": ["./node_modules/*.js", "./tests/*.js"],
     "rules": {
         // uso de identación con 4 espacios
         "indent": "off",

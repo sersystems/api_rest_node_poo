@@ -1,49 +1,69 @@
 Preparando el entorno
-    npm init --yes
-        package name: "multilayer_architecture_rest_api_poo_node"
-        version: ENTER
-        description: "Este es un proyecto que implementa una arquitectura multicapas de una API Rest en Node.js"
-        entry point: server.js
-        test command: ENTER
-        git repository: ENTER
-        keywords: multilayer architecture rest api poo node.js
-        author: Lic. Sergio Regalado Alessi
-        license: MIT
-    npm install --save express
-        Express es un framework de desarrollo para Node.js y actualmente casi estándar de facto para la
-        mayoría de aplicaciones desarrolladas en Node.js.
-    npm install --save cors
-    npm install --save dotenv
-    npm install --save body-parser
-    npm install --save compression
-        La compresión de gzip puede disminuir significativamente el tamaño del cuerpo de respuesta y, por lo
-        tanto, aumentar la velocidad de una aplicación web. Utilice el middleware de compresión para la
-        compresión de gzip en la aplicación Express.
-    npm install --save awilix
-    npm install --save sequelize
-        Sequelize es un ORM basado en la promesa para Node.js. Es compatible con los dialectos PostgreSQL,
-        MySQL, MariaDB, SQLite y MSSQL. Cuenta con soporte de transacciones sólidas, relaciones, replicación
-        de lectura.
-    npm install --save mysql2
-        Este es el controlador requerido para la conexión con MySQL.
-    npm install --save-dev sequelize-cli
-        Las migraciones permiten transferir su base de datos existente a otro estado y viceversa. Dichas
-        transiciones de estado se guardan en archivos de migración, que describen cómo llegar al nuevo estado
-        y cómo revertir los cambios para volver al estado anterior.
-    npm install --save-dev nodemon
-        Nodemon es una utilidad que monitorea los cambios en el código fuente que se esta desarrollando
-        y automáticamente re inicia el servidor. Cada vez que se garda un cambio se tiene que detener la
-        ejecución en consola con CTRL+C y volver a ejecutar nuevamente el comando node, es aquí donde entra
-        en accion nodemon, para esto, se debe agregar el siguiente código en "scripts" del package.json:
-            "watch": "node server.js",
-        Para levantar el servidor con nodemon en modo watch, se usa: npm run dev
-    npm install --save-dev eslint
-        Configurar proyecto: npx eslint --init
-    npm install --save-dev jest
-        Sirve para testear
-        se ejecuta todo con: npm test
-        se ejecuta en especifico con: npm test ./telefono.test.js
 
+    Paquetes:
+        npm init --yes
+            package name: "api_rest_node_poo"
+            version: ENTER
+            description: "Proyecto de API Rest bajo architecture onion regida por el POO. El mismo, está desarrollado con Node.js, Express, Sequelize y MySQL."
+            entry point: server.js
+            test command: jest
+            git repository: https://github.com/sersystems/api_rest_node_poo.git
+            keywords: multilayer architecture rest api poo node.js
+            author: Lic. Sergio Regalado Alessi
+            license: MIT
+        npm install --save express
+            Express es un framework de desarrollo para Node.js y actualmente casi estándar de facto para la
+            mayoría de aplicaciones desarrolladas en Node.js.
+        npm install --save cors
+        npm install --save dotenv
+        npm install --save body-parser
+        npm install --save compression
+            La compresión de gzip puede disminuir significativamente el tamaño del cuerpo de respuesta y, por lo
+            tanto, aumentar la velocidad de una aplicación web. Utilice el middleware de compresión para la
+            compresión de gzip en la aplicación Express.
+        npm install --save awilix
+            Es una librería que administra la inyección de dependencias, este un principio que describe un conjunto
+            de técnicas destinadas a disminuir el acoplamiento entre los componentes de una aplicación.
+        npm install --save sequelize
+            Sequelize es un ORM basado en la promesa para Node.js. Es compatible con los dialectos PostgreSQL,
+            MySQL, MariaDB, SQLite y MSSQL. Cuenta con soporte de transacciones sólidas, relaciones, replicación
+            de lectura.
+        npm install --save mysql2
+            Este es el controlador requerido para la conexión con MySQL.
+        npm install --save-dev sequelize-cli
+            Esta librería permita realizar migraciones para transferir su base de datos existente a otro estado y
+            viceversa. Dichas transiciones de estado se guardan en archivos de migración, que describen cómo
+            llegar al nuevo estado y cómo revertir los cambios para volver al estado anterior.
+            Para configurar un nuevo proyecto se hace con: npx sequelize-cli init
+                Para ejecutar todas las migraciones, se usa: npx sequelize-cli db:migrate
+                estas migraciones se pueden deshacer con: npx sequelize-cli db:migrate:undo:all
+                Para ejecutar todas las semillas, se usa: npx sequelize db:seed:all
+                estas semillas se pueden deshacer con: npx sequelize db:seed:undo:all
+        npm install --save-dev nodemon
+            Nodemon es una utilidad que monitorea los cambios en el código fuente que se esta desarrollando
+            y automáticamente re inicia el servidor. Cada vez que se garda un cambio se tiene que detener la
+            ejecución en consola con CTRL+C y volver a ejecutar nuevamente el comando node, es aquí donde entra
+            en accion nodemon, para esto, se debe agregar el siguiente código en "scripts" del package.json:
+                "watch": "nodemon index.js",
+                Para levantar el servidor con nodemon en modo watch, se usa: npm run watch
+        npm install --save-dev eslint
+            Es la herramienta predominante para la tarea de "limpiar" código javascript tanto en el servidor
+            (node. js) como en el navegador. Para configurar un nuevo proyecto se hace con: npx eslint --init
+                Para ejecutar un chequeo general, se usa: npm run eslint
+        npm install --save-dev jest
+            Jest es una librería abierta para pruebas en JavaScript desarrollada por Facebook. Una vez instalada,
+            se debe agregar el siguiente código en "scripts" del package.json:
+                "test": "jest tests/index.js",
+                Para ejecutar un testcase específico con jest, se usa: npm test nombreArcivo.test.js
+                Para ejecutar todos los testcase con jest, se usa: npm test
+
+    Git:
+        git init
+        git add .
+        git commit -m "configuración de arquitectura v1"
+        git branch -M main
+        git remote add origin https://github.com/sersystems/api_rest_node_poo.git
+        git push -u origin main
 
     Módulos:
         Para habilitar la importacion y exportacion de módulos en Node.js, se debe agregar el siguiente

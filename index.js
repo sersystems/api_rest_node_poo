@@ -1,4 +1,4 @@
 const Server = require('./infrastructure/config/server');
 
-const start = Server().initServer();
+const start = new Server();
 start.initServer();
