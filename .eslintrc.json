@@ -1,0 +1,46 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es2021": true
+    },
+    "extends": [
+        "airbnb-base"
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "ignorePatterns": ["node_modules/*.js", "tests/*.js"],
+    "rules": {
+        // uso de identación con 4 espacios
+        "indent": "off",
+        // uso de tabs
+        "no-tabs": "off",
+        // Uso obligatorio de comillas símples
+        "quotes": "warn",
+        // Uso obligatorio de comillas símples en props
+        "quote-props": ["error", "as-needed"],
+        // Uso de múltiples espacios
+        "no-multi-spaces": "off",
+        // Uso de un salto de línea
+        "padded-blocks": "off",
+        // Salto de línea obligatorio despues de una llave
+        "eol-last": "off",
+        // Control de require global
+        "global-require": "off",
+        // Uso obligatorio de "this" en un método de una clase
+        "class-methods-use-this": "off",
+        // Udo de punto y coma al finalizar una instrucción
+        "linebreak-style": "off",
+        // Uso de comentario múltiple de una sola línea
+        "spaced-comment": "off",
+        // Uso de parámetro único pasado a una clase padre desde en clase hija
+        "no-useless-constructor": "off",
+        // Control de declaración e inicialización de propiedades
+        "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }],
+        // Uso de guion bajo en la declaración de propiedades
+        "no-underscore-dangle": ["error", { "allowAfterThis": true }],
+        // Uso de console.log
+        "no-console": "off"
+    }
+}

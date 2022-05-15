@@ -1,0 +1,65 @@
+Preparando el entorno
+    npm init --yes
+        package name: "multilayer_architecture_rest_api_poo_node"
+        version: ENTER
+        description: "Este es un proyecto que implementa una arquitectura multicapas de una API Rest en Node.js"
+        entry point: server.js
+        test command: ENTER
+        git repository: ENTER
+        keywords: multilayer architecture rest api poo node.js
+        author: Lic. Sergio Regalado Alessi
+        license: MIT
+    npm install --save express
+        Express es un framework de desarrollo para Node.js y actualmente casi estándar de facto para la
+        mayoría de aplicaciones desarrolladas en Node.js.
+    npm install --save cors
+    npm install --save dotenv
+    npm install --save body-parser
+    npm install --save compression
+        La compresión de gzip puede disminuir significativamente el tamaño del cuerpo de respuesta y, por lo
+        tanto, aumentar la velocidad de una aplicación web. Utilice el middleware de compresión para la
+        compresión de gzip en la aplicación Express.
+    npm install --save awilix
+    npm install --save sequelize
+        Sequelize es un ORM basado en la promesa para Node.js. Es compatible con los dialectos PostgreSQL,
+        MySQL, MariaDB, SQLite y MSSQL. Cuenta con soporte de transacciones sólidas, relaciones, replicación
+        de lectura.
+    npm install --save mysql2
+        Este es el controlador requerido para la conexión con MySQL.
+    npm install --save-dev sequelize-cli
+        Las migraciones permiten transferir su base de datos existente a otro estado y viceversa. Dichas
+        transiciones de estado se guardan en archivos de migración, que describen cómo llegar al nuevo estado
+        y cómo revertir los cambios para volver al estado anterior.
+    npm install --save-dev nodemon
+        Nodemon es una utilidad que monitorea los cambios en el código fuente que se esta desarrollando
+        y automáticamente re inicia el servidor. Cada vez que se garda un cambio se tiene que detener la
+        ejecución en consola con CTRL+C y volver a ejecutar nuevamente el comando node, es aquí donde entra
+        en accion nodemon, para esto, se debe agregar el siguiente código en "scripts" del package.json:
+            "watch": "node server.js",
+        Para levantar el servidor con nodemon en modo watch, se usa: npm run dev
+    npm install --save-dev eslint
+        Configurar proyecto: npx eslint --init
+    npm install --save-dev jest
+        Sirve para testear
+        se ejecuta todo con: npm test
+        se ejecuta en especifico con: npm test ./telefono.test.js
+
+
+    Módulos:
+        Para habilitar la importacion y exportacion de módulos en Node.js, se debe agregar el siguiente
+        código en la raíz del package.json:
+            "type": "module",
+
+
+npx sequelize-cli init
+CREATE SCHEMA `sequelize_db_dev` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci ;
+
+npx sequelize-cli model:generate --name Usuario --attributes email:string,password:string
+npx sequelize-cli db:migrate
+npx sequelize-cli db:migrate:undo:all
+
+npx sequelize-cli migration:generate --name create-persona
+
+npx sequelize-cli seed:generate --name insert-usuario
+
+npx sequelize db:seed:all
