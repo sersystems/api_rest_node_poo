@@ -21,6 +21,8 @@ Preparando el entorno
             La compresión de gzip puede disminuir significativamente el tamaño del cuerpo de respuesta y, por lo
             tanto, aumentar la velocidad de una aplicación web. Utilice el middleware de compresión para la
             compresión de gzip en la aplicación Express.
+        npm install --save bcryptjs
+        npm install --save jsonwebtoken
         npm install --save awilix
             Es una librería que administra la inyección de dependencias, este un principio que describe un conjunto
             de técnicas destinadas a disminuir el acoplamiento entre los componentes de una aplicación.

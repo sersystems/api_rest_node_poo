@@ -6,7 +6,7 @@ class Repository {
     _db;
 
     constructor(db, model) {
-        this._db    = db[model];
+        this._db = db[model];
     }
 
     // Métodos abstractos

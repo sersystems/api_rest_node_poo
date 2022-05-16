@@ -22,6 +22,7 @@ class Server {
     }
 
     setRoutes() {
+        this.api.use('/api/auth', this.container.resolve('AuthController').getRoutes(this.express.Router()));
         this.api.use('/api/telefono', this.container.resolve('TelefonoController').getRoutes(this.express.Router()));
         this.api.use('/api/usuario', this.container.resolve('UsuarioController').getRoutes(this.express.Router()));
     }

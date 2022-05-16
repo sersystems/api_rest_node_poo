@@ -19,18 +19,21 @@ class Container {
 
         // Repositories
         this.#container.register({
+            AuthRepository: this.#awilix.asClass(require('../../core/domain/repositories/auth.repository')).singleton(),
             TelefonoRepository: this.#awilix.asClass(require('../../core/domain/repositories/telefono.repository')).singleton(),
             UsuarioRepository: this.#awilix.asClass(require('../../core/domain/repositories/usuario.repository')).singleton(),
         });
 
         // Services
         this.#container.register({
+            AuthService: this.#awilix.asClass(require('../../core/services/auth.service')).singleton(),
             TelefonoService: this.#awilix.asClass(require('../../core/services/telefono.service')).singleton(),
             UsuarioService: this.#awilix.asClass(require('../../core/services/usuario.service')).singleton(),
         });
 
-        // Endpoints
+        // Controllers
         this.#container.register({
+            AuthController: this.#awilix.asClass(require('../../core/controllers/auth.controller')).singleton(),
             TelefonoController: this.#awilix.asClass(require('../../core/controllers/telefono.controller')).singleton(),
             UsuarioController: this.#awilix.asClass(require('../../core/controllers/usuario.controller')).singleton(),
         });

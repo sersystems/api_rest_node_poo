@@ -12,6 +12,8 @@
     },
     "ignorePatterns": ["./node_modules/*.js", "./tests/*.js"],
     "rules": {
+        // Máxima longitud permitida en caracteres
+        "max-len": ["error", { "code": 175 }],
         // uso de identación con 4 espacios
         "indent": "off",
         // uso de tabs
@@ -20,6 +22,8 @@
         "quotes": "warn",
         // Uso obligatorio de comillas símples en props
         "quote-props": ["error", "as-needed"],
+        // Uso obligatorio de comillas dobles en índices
+        "dot-notation": "off",
         // Uso de múltiples espacios
         "no-multi-spaces": "off",
         // Uso de un salto de línea
