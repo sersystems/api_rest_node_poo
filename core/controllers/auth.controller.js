@@ -20,6 +20,7 @@ class AuthController {
                     res.status(200).json({
                         data: result.data,
                         status: result.status,
+                        token: result.token,
                         mesaage: (result.status) ? 'Usuario autenticado satisfactoriamente.' : 'Usuario no se logró auntenticar el usuario.',
                     });
                 });

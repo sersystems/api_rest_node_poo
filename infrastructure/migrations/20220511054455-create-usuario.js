@@ -38,14 +38,8 @@ module.exports = {
                 },
             },
             password: {
-                type: Sequelize.STRING(15),
+                type: Sequelize.STRING(60),
                 allowNull: false,
-                validate: {
-                    len: {
-                        args: [8, 15],
-                        msg: 'La contraseña debe tener entre 8 y 15 caracteres.',
-                    },
-                },
             },
             createdAt: {
                 type: Sequelize.DATE,

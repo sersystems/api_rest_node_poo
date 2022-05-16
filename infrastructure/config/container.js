@@ -42,6 +42,12 @@ class Container {
         this.#container.register({
             db: this.#awilix.asValue(require('../../core/domain/models')),
         });
+
+        // Others
+        this.#container.register({
+            Bcrypt: this.#awilix.asValue(require('bcryptjs')),
+            JWT: this.#awilix.asValue(require('jsonwebtoken')),
+        });
     }
 
     /**

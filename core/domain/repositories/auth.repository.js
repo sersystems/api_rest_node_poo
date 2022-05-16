@@ -11,19 +11,18 @@ class AuthRepository {
      * @param {Number} id
      * @returns {Object}
      */
-     async signInByEmailPassword(email, password) {
-        const auth = await this.#db.findOne({
+     async signInByEmailPassword(email) {
+        const usuario = await this.#db.findOne({
             where: {
                 email,
-                password,
             },
             attributes: {
-                include: ['id', 'nombre'],
+                include: ['id', 'nombre', 'password'],
             },
         })
         .then((data) => data);
 
-        return auth;
+        return usuario;
     }
 }
 
