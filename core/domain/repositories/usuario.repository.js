@@ -2,8 +2,8 @@ const Repository = require('./repository');
 
 class UsuarioRepository extends Repository {
 
-    constructor({ db, UsuarioEntity }) {
-        super(db, UsuarioEntity);
+    constructor({ db }) {
+        super(db, 'Usuario');
     }
 
     /**
@@ -11,40 +11,45 @@ class UsuarioRepository extends Repository {
      * @returns {Object}
      */
     async getById(id) {
-        const usuario = await this._db[this._entity].findOne({
+        const usuario = await this._db.findOne({
             where: {
                 id,
             },
-        });
+            attributes: {
+                exclude: ['createdAt', 'updatedAt'],
+            },
+            include: ['telefonos'],
+        })
+        .then((data) => data);
 
-        return {
-            data: usuario,
-            status: usuario !== null,
-        };
+        return usuario;
     }
 
     /**
      * @param {Object} filters
      * @returns {Object}
      */
-    async getAll(filters) {
-        const usuarios = [{ id: 1, nombre: `sergio1a ${filters}` }, { id: 2, nombre: 'sergio2' }, { id: 3, nombre: 'sergio3' }];
-        return {
-            data: usuarios,
-            //status: (usuarios.length > 0) ? true : false,
-        };
+    async getAll(filters = {}) {
+        const usuarios = await this._db.findAll({
+            where: filters,
+            attributes: {
+                exclude: ['createdAt', 'updatedAt'],
+            },
+            include: ['telefonos'],
+        })
+        .then((data) => data);
+
+        return usuarios;
     }
 
     /**
      * @param {Object} params
      * @returns {Object}
      */
-    async create(params) {
-        const usuario = { id: 4, nombre: `sergio1a ${params}` };
-        return {
-            data: usuario,
-            status: usuario !== null,
-        };
+    async create(body) {
+        const usuario = await this._db.create(body).then((data) => data);
+
+        return usuario;
     }
 
     /**
@@ -52,27 +57,28 @@ class UsuarioRepository extends Repository {
      * @returns {Object}
      */
     async delete(id) {
-        const done = await this._db[this._entity].destroy({
+        const done = await this._db.destroy({
             where: {
                 id,
             },
         });
 
-        return {
-            status: done,
-        };
+        return done;
     }
 
     /**
      * @param {Object} params
      * @returns {Object}
      */
-    async modify(params) {
-        const usuario = { id: 4, nombre: `sergio1a ${params}` };
-        return {
-            data: usuario,
-            status: usuario !== null,
-        };
+    async modify(id, body) {
+        const usuario = await this._db.update(body, {
+            where: {
+                id,
+            },
+        })
+        .then((data) => data);
+
+        return usuario;
     }
 }
 

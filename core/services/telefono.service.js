@@ -11,8 +11,12 @@ class TelefonoService extends Service {
      * @returns {Object}
      */
     async getById(id) {
-        const telefono = await this._repository.getById(id);
-        return telefono;
+        const telefono = (id && id > 0) ? await this._repository.getById(id) : null;
+
+        return {
+            data: telefono,
+            status: telefono !== null,
+        };
     }
 
     /**
@@ -21,16 +25,24 @@ class TelefonoService extends Service {
      */
     async getAll(filters) {
         const telefonos = await this._repository.getAll(filters);
-        return telefonos;
+
+        return {
+            data: telefonos,
+            status: telefonos !== null,
+        };
     }
 
     /**
      * @param {Object} params
      * @returns {Object}
      */
-    async create(params) {
-        const telefono = await this._repository.create(params);
-        return telefono;
+    async create(body) {
+        const telefono = (body) ? await this._repository.create(body) : null;
+
+        return {
+            data: telefono,
+            status: telefono !== null,
+        };
     }
 
     /**
@@ -38,17 +50,22 @@ class TelefonoService extends Service {
      * @returns {Object}
      */
     async delete(id) {
-        const telefono = await this._repository.delete(id);
-        return telefono;
+        return {
+            status: (id) ? await this._repository.delete(id) : null,
+        };
     }
 
     /**
      * @param {Object} params
      * @returns {Object}
      */
-    async modify(params) {
-        const telefono = await this._repository.modify(params);
-        return telefono;
+    async modify(id, body) {
+        const telefono = (id && id > 0 && body) ? await this._repository.modify(id, body) : null;
+
+        return {
+            data: telefono,
+            status: telefono !== null,
+        };
     }
 }
 

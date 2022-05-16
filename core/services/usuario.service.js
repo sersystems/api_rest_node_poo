@@ -11,8 +11,12 @@ class UsuarioService extends Service {
      * @returns {Object}
      */
     async getById(id) {
-        const usuario = await this._repository.getById(id);
-        return usuario;
+        const usuario = (id && id > 0) ? await this._repository.getById(id) : null;
+
+        return {
+            data: usuario,
+            status: usuario !== null,
+        };
     }
 
     /**
@@ -21,16 +25,24 @@ class UsuarioService extends Service {
      */
     async getAll(filters) {
         const usuarios = await this._repository.getAll(filters);
-        return usuarios;
+
+        return {
+            data: usuarios,
+            status: usuarios !== null,
+        };
     }
 
     /**
      * @param {Object} params
      * @returns {Object}
      */
-    async create(params) {
-        const usuario = await this._repository.create(params);
-        return usuario;
+    async create(body) {
+        const usuario = (body) ? await this._repository.create(body) : null;
+
+        return {
+            data: usuario,
+            status: usuario !== null,
+        };
     }
 
     /**
@@ -38,17 +50,22 @@ class UsuarioService extends Service {
      * @returns {Object}
      */
     async delete(id) {
-        const usuario = await this._repository.delete(id);
-        return usuario;
+        return {
+            status: (id) ? await this._repository.delete(id) : null,
+        };
     }
 
     /**
      * @param {Object} params
      * @returns {Object}
      */
-    async modify(params) {
-        const usuario = await this._repository.modify(params);
-        return usuario;
+    async modify(id, body) {
+        const usuario = (id && id > 0 && body) ? await this._repository.modify(id, body) : null;
+
+        return {
+            data: usuario,
+            status: usuario !== null,
+        };
     }
 }
 

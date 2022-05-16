@@ -2,24 +2,25 @@ const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
 
-    class TelefonoModel extends Model {
+    class Telefono extends Model {
         static associate(models) {
-            TelefonoModel.belongsTo(models.UsuarioModel, {
+            Telefono.belongsTo(models.Usuario, {
                 foreignKey: 'usuarioId',
+                as: 'usuario',
             });
         }
     }
 
-    TelefonoModel.init(
+    Telefono.init(
         {
-            usuario_id: DataTypes.STRING,
+            usuarioid: DataTypes.INTEGER,
             numero: DataTypes.STRING,
         },
         {
             sequelize,
-            modelName: 'TelefonoModel',
+            modelName: 'Telefono',
         },
     );
 
-    return TelefonoModel;
+    return Telefono;
 };

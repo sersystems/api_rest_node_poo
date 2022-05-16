@@ -5,8 +5,7 @@
         "database": "sequelize_db_dev",
         "host": "127.0.0.1",
         "port": "3310",
-        "dialect": "mysql",
-        "logging": false
+        "dialect": "mysql"
     },
     "test": {
         "username": "root",
@@ -14,8 +13,7 @@
         "database": "database_test",
         "host": "127.0.0.1",
         "port": "3310",
-        "dialect": "mysql",
-        "logging": false
+        "dialect": "mysql"
     },
     "production": {
         "username": "root",
@@ -23,7 +21,6 @@
         "database": "database_production",
         "host": "127.0.0.1",
         "port": "3310",
-        "dialect": "mysql",
-        "logging": false
+        "dialect": "mysql"
     }
 }

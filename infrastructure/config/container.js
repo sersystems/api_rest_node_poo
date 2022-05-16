@@ -11,12 +11,6 @@ class Container {
         this.#awilix    = require('awilix');
         this.#container = this.#awilix.createContainer();
 
-        // Models ORM
-        this.#container.register({
-            TelefonoModel: this.#awilix.asFunction(require('../../core/domain/models/telefono.model')).singleton(),
-            UsuarioModel: this.#awilix.asFunction(require('../../core/domain/models/usuario.model')).singleton(),
-        });
-
         // Entities
         this.#container.register({
             TelefonoEntity: this.#awilix.asClass(require('../../core/domain/entities/telefono.entity')).singleton(),

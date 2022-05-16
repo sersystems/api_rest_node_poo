@@ -2,8 +2,8 @@ const Repository = require('./repository');
 
 class TelefonoRepository extends Repository {
 
-    constructor({ db, TelefonoEntity }) {
-        super(db, TelefonoEntity);
+    constructor({ db }) {
+        super(db, 'Telefono');
     }
 
     /**
@@ -11,40 +11,45 @@ class TelefonoRepository extends Repository {
      * @returns {Object}
      */
     async getById(id) {
-        const telefono = await this._db[this._entity].findOne({
+        const telefono = await this._db.findOne({
             where: {
                 id,
             },
-        });
+            attributes: {
+                exclude: ['createdAt', 'updatedAt'],
+            },
+            include: ['usuario'],
+        })
+        .then((data) => data);
 
-        return {
-            data: telefono,
-            status: telefono !== null,
-        };
+        return telefono;
     }
 
     /**
      * @param {Object} filters
      * @returns {Object}
      */
-    async getAll(filters) {
-        const telefonos = [{ id: 1, nombre: `sergio1a ${filters}` }, { id: 2, nombre: 'sergio2' }, { id: 3, nombre: 'sergio3' }];
-        return {
-            data: telefonos,
-            //status: (telefonos && telefonos.length > 0) ? true : false,
-        };
+    async getAll(filters = {}) {
+        const telefonos = await this._db.findAll({
+            where: filters,
+            attributes: {
+                exclude: ['createdAt', 'updatedAt'],
+            },
+            include: ['usuario'],
+        })
+        .then((data) => data);
+
+        return telefonos;
     }
 
     /**
      * @param {Object} params
      * @returns {Object}
      */
-    async create(params) {
-        const telefono = { id: 4, nombre: `sergio1a ${params}` };
-        return {
-            data: telefono,
-            status: telefono !== null,
-        };
+    async create(body) {
+        const telefono = await this._db.create(body).then((data) => data);
+
+        return telefono;
     }
 
     /**
@@ -52,27 +57,28 @@ class TelefonoRepository extends Repository {
      * @returns {Object}
      */
     async delete(id) {
-        const done = await this._db[this._entity].destroy({
+        const done = await this._db.destroy({
             where: {
                 id,
             },
         });
 
-        return {
-            status: done,
-        };
+        return done;
     }
 
     /**
      * @param {Object} params
      * @returns {Object}
      */
-    async modify(params) {
-        const telefono = { id: 4, nombre: `sergio1a ${params}` };
-        return {
-            data: telefono,
-            status: telefono !== null,
-        };
+    async modify(id, body) {
+        const telefono = await this._db.update(body, {
+            where: {
+                id,
+            },
+        })
+        .then((data) => data);
+
+        return telefono;
     }
 }
 
