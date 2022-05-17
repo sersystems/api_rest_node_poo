@@ -8,6 +8,10 @@ module.exports = (sequelize, DataTypes) => {
                 foreignKey: 'usuarioId',
                 as: 'telefonos',
             });
+            Usuario.belongsTo(models.Rol, {
+                foreignKey: 'rolId',
+                as: 'rol',
+            });
         }
     }
 
@@ -17,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
             apellido: DataTypes.STRING,
             email: DataTypes.STRING,
             password: DataTypes.STRING,
+            rolId: DataTypes.INTEGER,
         },
         {
             sequelize,

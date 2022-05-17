@@ -11,12 +11,6 @@ class Container {
         this.#awilix    = require('awilix');
         this.#container = this.#awilix.createContainer();
 
-        // Entities
-        this.#container.register({
-            TelefonoEntity: this.#awilix.asClass(require('../../core/domain/entities/telefono.entity')).singleton(),
-            UsuarioEntity: this.#awilix.asClass(require('../../core/domain/entities/usuario.entity')).singleton(),
-        });
-
         // Repositories
         this.#container.register({
             AuthRepository: this.#awilix.asClass(require('../../core/domain/repositories/auth.repository')).singleton(),
@@ -41,12 +35,6 @@ class Container {
         // Databases
         this.#container.register({
             db: this.#awilix.asValue(require('../../core/domain/models')),
-        });
-
-        // Others
-        this.#container.register({
-            Bcrypt: this.#awilix.asValue(require('bcryptjs')),
-            JWT: this.#awilix.asValue(require('jsonwebtoken')),
         });
     }
 

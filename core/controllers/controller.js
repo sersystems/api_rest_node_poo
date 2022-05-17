@@ -3,9 +3,11 @@
 class Controller {
 
     // Propiedad protegida
+    _auth;
     _service;
 
-    constructor(service) {
+    constructor(auth, service) {
+        this._auth    = auth;
         this._service = service;
     }
 

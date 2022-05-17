@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+
 const Service = require('./service');
 
 class UsuarioService extends Service {
@@ -7,11 +9,11 @@ class UsuarioService extends Service {
     }
 
     /**
-     * @param {Number} id
+     * @param {String} email
      * @returns {Object}
      */
-    async getById(id) {
-        const usuario = (id && id > 0) ? await this._repository.getById(id) : null;
+    async getByEmail(email) {
+        const usuario = (this.checkEmail(email)) ? await this._repository.getByEmail(email) : null;
 
         return {
             data: usuario,
@@ -20,15 +22,13 @@ class UsuarioService extends Service {
     }
 
     /**
-     * @param {Object} filters
-     * @returns {Object}
+     * @param {String} email
+     * @returns {Boolean}
      */
-    async getAll(filters) {
-        const usuarios = await this._repository.getAll(filters);
+     async getRolByToken(token) {
 
         return {
-            data: usuarios,
-            status: usuarios !== null,
+            status: token,
         };
     }
 
@@ -36,22 +36,13 @@ class UsuarioService extends Service {
      * @param {Object} params
      * @returns {Object}
      */
-    async create(body) {
-        const usuario = (body) ? await this._repository.create(body) : null;
+     async create(body) {
+        body.password = (body.password) ? await this._auth.getHash(body.password) : null;
+        const model   = (body && this.checkEmail(body.email)) ? await this._repository.create(body) : null;
 
         return {
-            data: usuario,
-            status: usuario !== null,
-        };
-    }
-
-    /**
-     * @param {Number} id
-     * @returns {Object}
-     */
-    async delete(id) {
-        return {
-            status: (id) ? await this._repository.delete(id) : null,
+            data: model,
+            status: model !== null,
         };
     }
 
@@ -59,13 +50,24 @@ class UsuarioService extends Service {
      * @param {Object} params
      * @returns {Object}
      */
-    async modify(id, body) {
-        const usuario = (id && id > 0 && body) ? await this._repository.modify(id, body) : null;
+     async modify(id, body) {
+        body.password = (body.password) ? await this._auth.getHash(body.password) : null;
+        const model   = (id && id > 0 && body && this.checkEmail(body.email)) ? await this._repository.modify(id, body) : null;
 
         return {
-            data: usuario,
-            status: usuario !== null,
+            data: model,
+            status: model !== null,
         };
+    }
+
+    /**
+     * @param {String} email
+     * @returns {Boolean}
+     */
+     checkEmail(email) {
+        const emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
+        const emailValid = emailRegex.test(email);
+        return emailValid;
     }
 }
 

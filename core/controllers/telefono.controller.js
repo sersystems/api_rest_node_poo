@@ -11,7 +11,7 @@ class TelefonoController extends Controller {
      * @returns {Object}
      */
     getRoutes(router) {
-        router.get('/show/:id', (req, res) => {
+        router.get('/show/:id', this._auth.verifyToken, (req, res) => {
             this._service
                 .getById(req.params.id)
                 .then((result) => {
@@ -23,7 +23,7 @@ class TelefonoController extends Controller {
                 });
         });
 
-        router.get('/list', (req, res) => {
+        router.get('/list', this._auth.verifyToken, (req, res) => {
             this._service
                 .getAll(req.query)
                 .then((result) => {
@@ -35,7 +35,7 @@ class TelefonoController extends Controller {
                 });
         });
 
-        router.post('/create', (req, res) => {
+        router.post('/create', this._auth.verifyToken, (req, res) => {
             this._service
                 .create(req.body)
                 .then((result) => {
@@ -47,7 +47,7 @@ class TelefonoController extends Controller {
                 });
         });
 
-        router.delete('/delete/:id', (req, res) => {
+        router.delete('/delete/:id', this._auth.verifyToken, (req, res) => {
             this._service
                 .delete(req.params.id)
                 .then((result) => {
@@ -59,7 +59,7 @@ class TelefonoController extends Controller {
                 });
         });
 
-        router.put('/modify/:id', (req, res) => {
+        router.put('/modify/:id', this._auth.verifyToken, (req, res) => {
             this._service
             .modify(req.params.id, req.body)
                 .then((result) => {

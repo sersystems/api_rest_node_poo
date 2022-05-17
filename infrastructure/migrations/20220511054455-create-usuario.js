@@ -1,6 +1,6 @@
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('usuarios', {
+        await queryInterface.createTable('Usuarios', {
             id: {
                 type: Sequelize.INTEGER,
                 primaryKey: true,
@@ -41,6 +41,15 @@ module.exports = {
                 type: Sequelize.STRING(60),
                 allowNull: false,
             },
+            rolId: {
+                type: Sequelize.INTEGER,
+                references: {
+                    model: 'Rols',
+                    key: 'id',
+                },
+                allowNull: false,
+                onDelete: 'RESTRICT',
+            },
             createdAt: {
                 type: Sequelize.DATE,
                 defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
@@ -52,6 +61,6 @@ module.exports = {
         });
     },
     async down(queryInterface) {
-        await queryInterface.dropTable('usuarios');
+        await queryInterface.dropTable('Usuarios');
     },
 };

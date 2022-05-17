@@ -1,9 +1,9 @@
 const Controller = require('./controller');
 
-class UsuarioController extends Controller {
+class RolController extends Controller {
 
-    constructor({ AuthService, UsuarioService }) {
-        super(AuthService, UsuarioService);
+    constructor({ AuthService, RolService }) {
+        super(AuthService, RolService);
     }
 
     /**
@@ -18,19 +18,7 @@ class UsuarioController extends Controller {
                     res.status(200).json({
                         data: result.data,
                         status: result.status,
-                        mesaage: (result.status) ? 'Usuario hallado satisfactoriamente.' : 'No se halló un usuario que coincida con el ID indicado.',
-                    });
-                });
-        });
-
-        router.get('/show/:email', this._auth.verifyToken, (req, res) => {
-            this._service
-                .getByEmail(req.params.email)
-                .then((result) => {
-                    res.status(200).json({
-                        data: result.data,
-                        status: result.status,
-                        mesaage: (result.status) ? 'Usuario hallado satisfactoriamente.' : 'No se halló un usuario que coincida con el email indicado.',
+                        mesaage: (result.status) ? 'Rol hallado satisfactoriamente.' : 'No se halló un rol que coincida con el ID indicado.',
                     });
                 });
         });
@@ -42,7 +30,7 @@ class UsuarioController extends Controller {
                     res.status(200).json({
                         data: result.data,
                         status: result.status,
-                        mesaage: (result.status) ? 'Usuarios hallados satisfactoriamente.' : 'No se hallaron usuarios que coincida con el filtro indicado.',
+                        mesaage: (result.status) ? 'Rols hallados satisfactoriamente.' : 'No se hallaron rols que coincida con el filtro indicado.',
                     });
                 });
         });
@@ -54,7 +42,7 @@ class UsuarioController extends Controller {
                     res.status((result.status) ? 201 : 200).json({
                         data: result.data,
                         status: result.status,
-                        mesaage: (result.status) ? 'Usuario creado satisfactoriamente.' : 'No se logró crear el usuario.',
+                        mesaage: (result.status) ? 'Rol creado satisfactoriamente.' : 'No se logró crear el rol.',
                     });
                 });
         });
@@ -66,7 +54,7 @@ class UsuarioController extends Controller {
                     res.status(200).json({
                         data: result.data,
                         status: result.status,
-                        mesaage: (result.status) ? 'Usuario eliminado satisfactoriamente.' : 'No se logró eliminar el usuario.',
+                        mesaage: (result.status) ? 'Rol eliminado satisfactoriamente.' : 'No se logró eliminar el rol.',
                     });
                 });
         });
@@ -78,7 +66,7 @@ class UsuarioController extends Controller {
                     res.status((result.status) ? 201 : 200).json({
                         data: result.data,
                         status: result.status,
-                        mesaage: (result.status) ? 'Usuario modificado satisfactoriamente.' : 'No se logró modificar el usuario.',
+                        mesaage: (result.status) ? 'Rol modificado satisfactoriamente.' : 'No se logró modificar el rol.',
                     });
                 });
         });
@@ -87,4 +75,4 @@ class UsuarioController extends Controller {
     }
 }
 
-module.exports = UsuarioController;
+module.exports = RolController;

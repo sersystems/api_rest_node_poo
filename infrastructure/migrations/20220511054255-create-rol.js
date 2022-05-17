@@ -1,27 +1,17 @@
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('telefonos', {
+        await queryInterface.createTable('Rols', {
             id: {
                 type: Sequelize.INTEGER,
                 primaryKey: true,
                 autoIncrement: true,
             },
-            usuarioId: {
-                type: Sequelize.INTEGER,
-                references: {
-                    model: 'Usuarios',
-                    key: 'id',
-                },
-                allowNull: true,
-                onDelete: 'CASCADE',
-            },
-            numero: {
+            denominacion: {
                 type: Sequelize.STRING(15),
-                allowNull: true,
+                allowNull: false,
                 validate: {
-                    is: {
-                        args: ['[0-9]+', '+'],
-                        msg: 'El teléfono debe ser válido.',
+                    isUppercase: {
+                        msg: 'La denominación debe estar en mayúsculas.',
                     },
                 },
             },
@@ -36,6 +26,6 @@ module.exports = {
         });
     },
     async down(queryInterface) {
-        await queryInterface.dropTable('telefonos');
+        await queryInterface.dropTable('Rols');
     },
 };

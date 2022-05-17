@@ -1,5 +1,3 @@
-/*eslint no-unused-vars: "off"*/
-
 class Service {
 
     // Propiedad protegida
@@ -9,12 +7,69 @@ class Service {
         this._repository = repository;
     }
 
-    // Métodos abstractos
-    async getById(id) { throw new Error('Tienes que implementar el método getById.'); }
-    async getAll(filters) { throw new Error('Tienes que implementar el método getAll.'); }
-    async create(body) { throw new Error('Tienes que implementar el método create.'); }
-    async delete(id) { throw new Error('Tienes que implementar el método delete.'); }
-    async modify(id, body) { throw new Error('Tienes que implementar el método modify.'); }
+    /**
+     * @param {Number} id
+     * @returns {Object}
+     */
+     async getById(id) {
+        const model = (id && id > 0) ? await this._repository.getById(id) : null;
+
+        return {
+            data: model,
+            status: model !== null,
+        };
+    }
+
+    /**
+     * @param {Object} filters
+     * @returns {Object}
+     */
+    async getAll(filters) {
+        const models = await this._repository.getAll(filters);
+
+        return {
+            data: models,
+            status: models !== null,
+        };
+    }
+
+    /**
+     * @param {Object} params
+     * @returns {Object}
+     */
+    async create(body) {
+        const model = (body) ? await this._repository.create(body) : null;
+
+        return {
+            data: model,
+            status: model !== null,
+        };
+    }
+
+    /**
+     * @param {Number} id
+     * @returns {Object}
+     */
+    async delete(id) {
+        const result = (id) ? await this._repository.delete(id) : null;
+
+        return {
+            status: result,
+        };
+    }
+
+    /**
+     * @param {Object} params
+     * @returns {Object}
+     */
+    async modify(id, body) {
+        const model = (id && id > 0 && body) ? await this._repository.modify(id, body) : null;
+
+        return {
+            data: model,
+            status: model !== null,
+        };
+    }
 }
 
 module.exports = Service;

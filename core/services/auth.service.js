@@ -1,13 +1,12 @@
+const bcrypt = require('bcryptjs');
+const jwt    = require('jsonwebtoken');
+
 class AuthService {
 
-    // Propiedades privadas
-    #bcrypt;
-    #jwt;
+    // Propiedad privada
     #repository;
 
-    constructor({ Bcrypt, JWT, AuthRepository }) {
-        this.#bcrypt = Bcrypt;
-        this.#jwt = JWT;
+    constructor({ AuthRepository }) {
         this.#repository = AuthRepository;
     }
 
@@ -15,64 +14,72 @@ class AuthService {
      * @param {Object} body
      * @returns {Object}
      */
-    async signIn(body) {
+    async login(body) {
         const { email, password } = body;
 
-        const usuario      = (email && password) ? await this.#repository.signInByEmailPassword(email) : null;
+        // Consulta la BD en busca de un usuario que coincida con el email y password recibido.
+        const usuario      = (email && password) ? await this.#repository.loginByEmailPassword(email) : null;
         const passwordHash = (usuario) ? usuario.password : null;
-        const auth         = await this.compareHash(password, passwordHash);
-        const token        = await this.encodeToken(usuario.id, usuario.nombre);
 
-        const Credential  = await this.decodeToken(token);
-        console.log(Credential);
+        // Crea un token personalizado.
+        const token = jwt.sign(
+            { id: usuario.id, password: usuario.password },
+            (process.env.TOKEN_SECRET || 'U2VyZ2lvUmVnYWxhZG9BbGVzc2kyMDIy'),
+            { expiresIn: (process.env.TOKEN_EXPIRE || '1h') },
+        );
+
+        // Comprueba que el password recibido coincida con el password hash almacenado en la BD.
+        const comparation = await bcrypt.compare(password, passwordHash).then((res) => res);
 
         return {
-            data: token,
-            status: auth,
+            status: comparation,
+            token,
         };
     }
 
     /**
-     * @param {Object} body
+     * Autentifica las credenciales de un usuario a partir del token almacenado en el header[authorization].
+     *
+     * @param {Object} req
+     * @param {Object} res
+     * @param {Object} next
      * @returns {Object}
      */
-    async signUp(body) {
-        const usuario = (body.email && body.password) ? await this.#repository.signInByEmailPassword(body.email, body.password) : null;
+    verifyToken(req, res, next) {
+        const authHeader = req.headers['authorization'];
+        const token      = authHeader && authHeader.split(' ')[1];
 
-        return {
-            data: usuario,
-            status: usuario !== null,
-        };
+        try {
+            if (!token) {
+                res.status(403).json({
+                    status: false,
+                    msg: 'API: Acceso denegado. Está intentando acceder sin autentiticación.',
+                });
+            }
+
+            const verified = jwt.verify(token, (process.env.TOKEN_SECRET || 'U2VyZ2lvUmVnYWxhZG9BbGVzc2kyMDIy'));
+
+            if (verified) {
+                req.usuario = verified;
+                next();
+            }
+        } catch (error) {
+            res.status(400).json({
+                status: false,
+                msg: 'API: Acceso denegado. Está intentando acceder con un token inválido.',
+            });
+        }
     }
 
-    async encodeToken(id, nombre) {
-        const token = await this.#jwt.sign(
-            {
-                id,
-                nombre,
-            },
-            process.env.TOKEN_PRIVATE_KEY || '4zeYcXDuLPbe2jcH23IixDFEZMbdxi',
-            {
-                expiresIn: process.env.TOKEN_EXPIRE || '1h',
-            },
-        );
-
-        return token;
-    }
-
-    async decodeToken(token) {
-        const credential = await this.#jwt.sign(token, process.env.TOKEN_PRIVATE_KEY || '4zeYcXDuLPbe2jcH23IixDFEZMbdxi');
-        return credential;
-    }
-
+    /**
+     * Obtiene un hash a partir de un password recibido.
+     *
+     * @param {String} password
+     * @returns {String}
+     */
     async getHash(password) {
-        const hash = await this.#bcrypt.hashSync(password, 8);
+        const hash = await bcrypt.hashSync(password, 8);
         return hash;
-    }
-
-    async compareHash(password, passwordHash) {
-        const comparation = await this.#bcrypt.compare(password, passwordHash).then((res) => res);
-        return comparation;
     }
 }
 

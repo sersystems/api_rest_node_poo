@@ -13,27 +13,15 @@ class AuthController {
      */
     getRoutes(router) {
 
-        router.post('/signin', (req, res) => {
+        router.post('/login', (req, res) => {
             this.#service
-            .signIn(req.body)
+            .login(req.body)
                 .then((result) => {
-                    res.status(200).json({
-                        data: result.data,
+                    res.header('auth-token', result.token).json({
                         status: result.status,
-                        token: result.token,
-                        mesaage: (result.status) ? 'Usuario autenticado satisfactoriamente.' : 'Usuario no se logró auntenticar el usuario.',
-                    });
-                });
-        });
-
-        router.post('/signup', (req, res) => {
-            this.#service
-            .signUp(req.body)
-                .then((result) => {
-                    res.status(200).json({
-                        data: result.data,
-                        status: result.status,
-                        mesaage: (result.status) ? 'Usuario registrado satisfactoriamente.' : 'No se logró registrar el usuario.',
+                        data: {
+                            token: result.token,
+                        },
                     });
                 });
         });
